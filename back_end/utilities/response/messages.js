@@ -16,6 +16,7 @@ module.exports = {
     OTP_VERIFIED_SUCCESS: "OTP Verified Successfully",
     OTP_RESENT_SUCCESS: "OTP resent successfully",
     ROLE_NOT_MATHCED:"Role not matched! It should be either candidate,employer or admin",
-    EMPLOYER_NOT_VERIFIED:"Employer is not verified by the admin"
+    EMPLOYER_NOT_VERIFIED:"Employer is not verified by the admin",
+    SOME_PARAMS_MISSING:"Some params are missing"
    
 };

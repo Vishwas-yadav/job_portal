@@ -44,6 +44,51 @@ const saveCandidateDetails=async(params)=>{
     }
 }
 
+const getCandidateListService=async()=>{
+    try {
+        let candList=await candidate.find({},{ __v: 0 });
+    console.log("Candidate List:",candList);
+    if (!candList.length){
+        throw {
+            br: true,
+            msg: {
+                err: "No Candidate List"
+            }
+        }
+    }
+    return{
+        res: candList
+    }
+    } catch (error) {
+        console.log("Error in get Candidate List:", error);
+        throw error;
+    }
+}
+
+
+const getCandidateDetailByIdService=async(params)=>{
+    try {
+        console.log("HERE::",params);
+        let {id}=params;
+        let cand=await candidate.findById(id);
+        if(!cand){
+            throw {
+                br: true,
+                msg: {
+                    err: "No Candidate Found"
+                }
+            }
+        }
+        return{
+            res:cand
+        }
+    } catch (error) {
+        console.log("Error in getEmpDetailsByIdService:", error);
+        throw error;
+    }
+}
 module.exports={
-    saveCandidateDetails
+    saveCandidateDetails,
+    getCandidateListService,
+    getCandidateDetailByIdService
 }

@@ -8,10 +8,6 @@ const loginSchema = Schema({
         type: String,
         required: true
     },
-    isVerified: {
-        type: Boolean,
-        default: false
-    },
     isActive: {
         type: Boolean,
         default: true
@@ -22,6 +18,5 @@ const loginSchema = Schema({
         //candidate, employer, admin
     }
 });
-
 const login = model("login", loginSchema);
 module.exports = login;

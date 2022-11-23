@@ -37,7 +37,53 @@ try {
 }
 }
 
+const getEmployeeListService=async()=>{
+try {
+    let employerList=await employer.find({},{ __v: 0 });
+    console.log("Employer List:",employerList);
+    if (!employerList.length){
+        throw {
+            br: true,
+            msg: {
+                err: "No Employer List"
+            }
+        }
+    }
+    return{
+        res: employerList
+    }
+} catch (error) {
+    console.log("Error in get Employers List:", error);
+    throw error;
+}
+}
+
+const getEmpDetailsByIdService=async(params)=>{
+try {
+    console.log("HERE::",params);
+    let {id}=params;
+    let emp=await employer.findById(id);
+    if(!emp){
+        throw {
+            br: true,
+            msg: {
+                err: "No Employer Found"
+            }
+        }
+    }
+    return {
+        res:emp
+    };
+} catch (error) {
+    console.log("Error in getEmpDetailsByIdService:", error);
+    throw error;
+}
+
+
+}
 
 module.exports={
-    saveEmployerDetails
+    saveEmployerDetails,
+    getEmployeeListService,
+    getEmpDetailsByIdService
 }

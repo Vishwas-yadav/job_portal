@@ -26,6 +26,10 @@ const employerSchema = Schema({
     contact:{
         type:Number,
         require:true
+    },
+    isVerified:{
+        type:Boolean,
+        default:false
     }
 });
 
