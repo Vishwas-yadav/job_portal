@@ -1,5 +1,7 @@
 const { REGISTRATION_PARAMS_MISSING,EMPLOYER_NOT_VERIFIED,ROLE_NOT_MATHCED, EMAIL_ALREADY_EXISTS, REGISTERED_SUCCESS, USER_NOT_FOUND, LOGIN_SUCCESS, PASSWORD_INCORRECT, EMAIL_REQUIRED_ERR, EMAIL_NOT_FOUND_ERR, RESET_PASSWORD_LINK_SUCCESS } = require("../../utilities/response/messages");
 const login = require("./model");
+const candidate=require("../candidate/model");
+const employer=require("../employer/model");
 const Promise = require("bluebird");
 const bcrypt = Promise.promisifyAll(require("bcryptjs"));
 const { getJwtToken } = require("../../utilities/authentication/token");
@@ -11,9 +13,6 @@ const registerUserService = async(params)=>{
 try {
     let {email,password,role,name,organizationName,address,website,contact,dob,fathersName,education,workExperience,
     skills,picture,resume}=params;
-
-
-
     if(role!='candidate' && role!='employer' && role!='admin'){
         throw{
             br:true,
@@ -186,7 +185,77 @@ const loginUserService = async (params) => {
     }
 }
 
+const UpdateProfileService=async (params)=>{
+    try {
+        let {email,role,name,organizationName,address,website,contact,dob,fathersName,education,workExperience,
+            skills,picture,resume}=params;
+            if(role!='candidate' && role!='employer'){
+                throw{
+                    br:true,
+                    msg:{
+                        err: ROLE_NOT_MATHCED
+                    }
+                }
+            }
+
+
+    if(role=='employer' && (!email || !role || !name || !organizationName || !address || !contact)){
+        throw {
+            br: true,
+            msg: {
+                err: REGISTRATION_PARAMS_MISSING
+            }
+        }
+    }
+
+    if(role=='candidate' && (!email || !role || !name || !address || !contact || !dob || !fathersName)){
+        throw {
+            br: true,
+            msg: {
+                err: REGISTRATION_PARAMS_MISSING
+            }
+        }
+    }
+    if(role=='candidate'){
+        let updateObj={
+            email: email,  
+            name: name, 
+            dob: dob, 
+            address: address, 
+            contact: contact, 
+            fathersName: fathersName, 
+            education: education, 
+            workExperience: workExperience, 
+            skills: skills, 
+            picture: picture, 
+            resume: resume
+        }
+        let updatedDb=await candidate.findOneAndUpdate({email: email},updateObj);
+
+    }
+    if(role=='employer'){
+        let updateObj={
+                name:name,
+                email:email,
+                organizationName:organizationName,
+                address:address,
+                website:website,
+                contact:contact
+        }
+        let updatedDbemp=await employer.findOneAndUpdate({email: email},updateObj)
+    }
+    return {
+        msg:'Successfully Updated the profile!'
+    }
+    } catch (error) {
+        console.log("Error in UpdateProfileService:", error);
+        throw error;
+    }
+}
+
+
 module.exports = {
     registerUserService,
-    loginUserService
+    loginUserService,
+    UpdateProfileService
 }

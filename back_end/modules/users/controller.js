@@ -1,6 +1,6 @@
 const { successResponse, badRequest, internalServer } = require("../../utilities/response/index");
 const { UNKNOWN_ERROR } = require("../../utilities/response/messages");
-const {registerUserService,loginUserService}=require('./service');
+const {registerUserService,loginUserService,UpdateProfileService}=require('./service');
 const registerUserCtrl = async(req,res)=>{
 try {
     console.log("req register:", req.body);
@@ -40,8 +40,27 @@ const loginUserCtrl = async (req, res) => {
     }
 }
 
+const UpdateProfileCtrl=async(req,res)=>{
+    try {
+        console.log("req:", req.body);
+        const result = await UpdateProfileService(req.body);
+        successResponse(res, result);
+    } catch (error) {
+        if (error.br) {
+            console.log("Known error in UpdateProfileCtrl Controller:", JSON.stringify(error));
+            badRequest(res, error.msg);
+        } else {
+            console.log("Unknown error in UpdateProfileCtrl Controller:", error);
+            let errObj = {
+                err: UNKNOWN_ERROR
+            };
+            internalServer(res, errObj);
+        }
+    }
+}
 
 module.exports = {
     registerUserCtrl,
-    loginUserCtrl
+    loginUserCtrl,
+    UpdateProfileCtrl
 }
