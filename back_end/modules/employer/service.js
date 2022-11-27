@@ -27,8 +27,8 @@ try {
             throw err;
         }
     });
-    
-
+    console.log(newEmp);
+    return newEmp._id;
 
 
 } catch (error) {

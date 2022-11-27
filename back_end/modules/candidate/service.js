@@ -36,7 +36,7 @@ const saveCandidateDetails=async(params)=>{
                 throw err;
             }
         });
-        
+        return newCand._id;
     
     } catch (error) {
         console.log("Error in Saving Candidates Registration details:", error);

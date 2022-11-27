@@ -83,12 +83,7 @@ try {
         role:newUser.role
     };
     let jwtResult = await getJwtToken(payload);
-        result = {
-            res: jwtResult,
-            msg: REGISTERED_SUCCESS
-        };
-
-
+        let userId = "";
         if(role=="employer"){
             //save to employer db...
             const newEmp={
@@ -101,7 +96,7 @@ try {
                 contact:contact
             }
             console.log("employers registration");
-            await saveEmployerDetails(newEmp);
+            userId= await saveEmployerDetails(newEmp);
 
         }else if(role=="candidate"){
             const newCand={
@@ -118,12 +113,17 @@ try {
                 picture:picture,
                 resume:resume
             }
-            await saveCandidateDetails(newCand);
+            userId=await saveCandidateDetails(newCand);
             console.log("candidate registration..");
         }else{
 
             console.log("admin registration successful..");
         }
+        result = {
+            res: jwtResult,
+            msg: REGISTERED_SUCCESS,
+            userId: userId
+        };
         return result;
 } catch (error) {
     console.log("Error in Register User Service:", error);
