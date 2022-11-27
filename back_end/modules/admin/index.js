@@ -8,6 +8,9 @@ const authenticate=require('../../utilities/authentication/passport')().authenti
 adminRouter.post('/verify_emp',authenticate(),bodyParser({
 emp_id:{
     type: String
+},
+setVerified:{
+    type:Boolean
 }
 }),setEmpVerifiedCtrl);
 

@@ -42,6 +42,10 @@ const candidateSchema = Schema({
     },
     resume:{
         type:String
+    },
+    isVerified:{
+        type:Boolean,
+        default:true
     }
 });
 

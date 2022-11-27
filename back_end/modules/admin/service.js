@@ -3,7 +3,7 @@ const { REGISTRATION_PARAMS_MISSING,SOME_PARAMS_MISSING,EMPLOYER_NOT_VERIFIED,RO
 const employer=require("../employer/model");
 const setEmpVerifiedService=async (params)=>{
 try {
-    let {emp_id}=params;
+    let {emp_id,setVerified}=params;
     if(!emp_id){
         throw {
             br: true,
@@ -15,7 +15,7 @@ try {
     let filter={
         loginId:emp_id
     };
-    const user=await employer.findOneAndUpdate(filter,{isVerified:true});
+    const user=await employer.findOneAndUpdate(filter,{isVerified:setVerified});
     if(!user){
         throw {
             br: true,
@@ -26,7 +26,7 @@ try {
     }
     console.log("User found::", user);
     let result={
-        msg:"Employee is verified now!"
+        msg:"Employer Access Updated successfully!"
     }
     return result;
 } catch (error) {
