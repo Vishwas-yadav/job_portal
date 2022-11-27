@@ -158,6 +158,17 @@ const loginUserService = async (params) => {
                     }
                 }
             }
+            if(user.role=='candidate'){
+                let cand=await candidate.findOne({email:user.email});
+                if(cand.isVerified==false){
+                    throw {
+                        br: true,
+                        msg: {
+                            err: "Your Account has been diabled! Contact Admin."
+                        }
+                    }
+                }
+            }
             const payload = {
                 id: user.id,
                 email: user.email,
