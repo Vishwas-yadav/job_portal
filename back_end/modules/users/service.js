@@ -147,11 +147,14 @@ const loginUserService = async (params) => {
         console.log("USER OBJ::", user);
         const isMatched = await bcrypt.compare(password, user.password);
         if (isMatched) {
-            if(user.role=="employer" && user.isVerified==false){
-                throw {
-                    br: true,
-                    msg: {
-                        err: EMPLOYER_NOT_VERIFIED
+            if(user.role=="employer"){
+                let employerUser=await employer.findOne({email:user.email});
+                if(employerUser.isVerified==false){
+                    throw {
+                        br: true,
+                        msg: {
+                            err: EMPLOYER_NOT_VERIFIED
+                        }
                     }
                 }
             }
