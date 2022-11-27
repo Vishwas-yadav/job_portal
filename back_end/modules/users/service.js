@@ -167,7 +167,9 @@ const loginUserService = async (params) => {
             let jwtResult = await getJwtToken(payload);
             result = {
                 res: jwtResult,
-                msg: LOGIN_SUCCESS
+                msg: LOGIN_SUCCESS,
+                role: user.role,
+                id: user.id
             };
             return result;
         } else {

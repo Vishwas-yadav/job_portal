@@ -11,7 +11,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", require('./routes'));
 
-
+// mongoose
+//   .connect("mongodb://localhost:27017/jobPortal", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+//   })
+//   .then((res) => console.log("Connected to DB"))
+//   .catch((err) => console.log(err));
 
 mongoose.connect(config.mongoURI, { useNewUrlParser: true,useUnifiedTopology: true})
     .then(() => {
