@@ -195,7 +195,7 @@ const Candidates = (props) => {
       style={{ padding: "30px", minHeight: "93vh" }}
     >
       <Grid item>
-        <Typography variant="h2">Manage Employersd</Typography>
+        <Typography variant="h2">Manage Candidates</Typography>
       </Grid>
       <Grid
         container
