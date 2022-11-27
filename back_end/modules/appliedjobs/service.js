@@ -78,11 +78,20 @@ try {
     const appliedList=await appliedjob.find({candId:id});
     const finalRes=[];
     for(const fn of appliedList){
-        const finalList=await job.findById(fn.jobId);
-        finalRes.push(finalList);
-        //console.log("insoide::",finalRes);
+        let finalList=await job.findById(fn.jobId);
+        let newobj={
+            applicationStatus:fn.applicationStatus,
+            _id:finalList._id,
+            jobtitle:finalList.jobtitle,
+            empId:finalList.empId,
+            description:finalList.description,
+            qualification:finalList.qualification,
+            salary:finalList.salary,
+            joblocation:finalList.joblocation,
+            jobsector:finalList.jobsector
+        }
+        finalRes.push(newobj);
     }
-    //console.log("finalRes::",finalRes);
     return{
         res: finalRes
     }
@@ -100,7 +109,26 @@ const getCandidateListForjobService=async(params)=>{
     const finalRes=[];
     for(const fn of appliedList){
         let finalList=await candidate.findById(fn.candId);
-        finalRes.push(finalList);
+        console.log(fn.applicationStatus);
+        let newobj={
+            _id: finalList._id,
+            email: finalList.email,
+            loginId:finalList.loginId,
+            name: finalList.name,
+            dob: finalList.dob,
+            address: finalList.address,
+            fathersName: finalList.fathersName,
+            contact: finalList.contact,
+            education:finalList.education,
+            workExperience: finalList.workExperience,
+            skills: finalList.skills,
+            picture: finalList.picture,
+            resume: finalList.resume,
+            __v: finalList.__v,
+            applicationStatus:fn.applicationStatus
+        }
+        finalRes.push(newobj);
+        console.log("heher:",newobj);
     }
     return{
         res: finalRes
